@@ -3,7 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [sumMessage, setSumMesssage] = useState('not calculated yet')
+  const [messageFor, setMessageFor] = useState('not calculated yet')
+  const [messageZeroTimeout, setMessageZeroTimeout] = useState('not calculated yet')
   const number = 1e9;
 
   const first = () => {
@@ -16,7 +17,7 @@ function App() {
       sum += i;
     }
     let t2 = performance.now()
-    setSumMesssage(`Common  sum = ${sum} \n took ${t2 - t1} ms`)
+    setMessageFor(`Common sum = ${sum} \n took ${t2 - t1} ms`)
   }
 
   const second = () => {
@@ -42,7 +43,7 @@ function App() {
 
       if (i === number) {
         let t2 = performance.now();
-        setSumMesssage(`Common  sum = ${sum} \n took ${t2 - t1} ms`)
+        setMessageZeroTimeout(`Zero timeout sum = ${sum} \n took ${t2 - t1} ms`)
       }
     }
 
@@ -53,8 +54,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo"/>
-        <span>{sumMessage}</span>
+        <span>{messageFor}</span>
         <button onClick={() => first()}>first (common 'for')</button>
+        <span>{messageZeroTimeout}</span>
         <button onClick={() => second()}>second (zero timeout)</button>
       </header>
     </div>
