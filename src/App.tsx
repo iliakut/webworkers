@@ -4,8 +4,7 @@ import './App.css';
 
 function App() {
   const [sumMessage, setSumMesssage] = useState('not calculated yet')
-  const number = 1000000000;
-  const halfNumber = number / 2;
+  const number = 1e9;
 
   const first = () => {
     /*
@@ -21,24 +20,33 @@ function App() {
   }
 
   const second = () => {
-    // let i = 0;
-    // let t1 = performance.now();
-    // let sum = 0;
-    //
-    // function count() {
-    //   do {
-    //     sum += i;
-    //   } while (i <= halfNumber);
-    //
-    //   if (i === number) {
-    //     let t2 = performance.now()
-    //     setSumMesssage(`Timer sum = ${sum} \n took ${t2 - t1} ms`)
-    //   } else {
-    //     setTimeout(count, 0);
-    //   }
-    // }
-    //
-    // count();
+    /*
+    * цикл с разбиением задачи на части
+    * часть задачи выполняется в нулевом setTimeout
+    * у браузера есть время что-то сделать,
+    * затем выполняется следующая часть и т.д.
+    * пока не выполнится весь подсчет
+    */
+    let i = 0;
+    let sum = 0;
+
+    let t1 = performance.now();
+    function count() {
+      if (i < number - 1e6) {
+        setTimeout(count, 0);
+      }
+      do {
+        i++;
+        sum += i;
+      } while (i % 1e6 !== 0);
+
+      if (i === number) {
+        let t2 = performance.now();
+        setSumMesssage(`Common  sum = ${sum} \n took ${t2 - t1} ms`)
+      }
+    }
+
+    count();
   }
 
   return (
