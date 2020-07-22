@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import worker from './worker';
+import WorkerSetup from "./workerCreate";
+
+const myWorker = WorkerSetup(worker);
 
 function App() {
   const [messageFor, setMessageFor] = useState('not calculated yet')
@@ -57,10 +61,7 @@ function App() {
   }
 
   const third = () => {
-    if (window.Worker) {
-      const myWorker = new Worker("worker.js");
-      myWorker.postMessage(number);
-    }
+    myWorker.postMessage([123333])
   }
 
   return (
