@@ -3,8 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 import worker from './worker';
 import WorkerSetup from "./workerCreate";
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Worker from 'worker-loader!./worker/worker2';
 
-const myWorker = WorkerSetup(worker);
+const worker1 = WorkerSetup(worker);
+const worker2 = new Worker();
 
 function App() {
   const [messageFor, setMessageFor] = useState('not calculated yet')
@@ -61,7 +64,9 @@ function App() {
   }
 
   const third = () => {
-    myWorker.postMessage([123333])
+    worker1.postMessage([123333])
+    worker2.postMessage([3333])
+
   }
 
   return (
