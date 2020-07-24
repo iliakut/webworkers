@@ -4,7 +4,26 @@ import './App.css';
 import worker from './worker';
 import WorkerSetup from "./workerCreate";
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import Worker from 'worker-loader!./worker/worker2';
+import Worker from 'worker-loader!./worker2';
+
+/*
+* worker1 - вариант воркера с конвертацией модуля в файл
+* worker2 - импорт с помозью weorker-loader
+*
+* worker1
+* WorkerSetup - функция создатель воркера (конвертит функцию в файл)
+* и возвращает экземпляр ворера
+* worker - просто функция, по сути код воркера
+*
+* worker2
+* требуется установить npm пакет worker-loader
+* далее объявляется модуль воркера (в файле custom.d.ts)
+* далее создается файл с кодом воркера (worker2.ts)
+* вся работа в файле worker2.ts ведется через переменную ctx (см. файл)
+* с помощью import Worker from 'worker-loader!./worker2';
+* импортится функция-создатель воркера
+*
+*/
 
 const worker1 = WorkerSetup(worker);
 const worker2 = new Worker();
