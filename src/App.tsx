@@ -83,10 +83,24 @@ function App() {
   }
 
   const third = () => {
-    worker1.postMessage([123333])
-    worker2.postMessage([3333])
+    /*
+    * worker
+    * цикл считается в воркере
+    * поскольку это не процесс в dom
+    * он выполняется параллельно
+    */
+    worker1.postMessage([1])
+    worker2.postMessage([2])
 
+    worker2.postMessage({number, t1: Date.now()})
   }
+
+  worker2.onmessage = (event) => {
+    const {sum, t1} = event.data;
+    const t2 = Date.now();
+
+    setmessageWorker(`WebWorker sum = \n ${sum} \n took \n ${t2 - t1} ms`)
+  };
 
   return (
     <div className="App">

@@ -2,10 +2,18 @@
 // eslint-disable-next-line no-restricted-globals
 const ctx: Worker = self as any;
 
-// Post data to parent thread
-ctx.postMessage({ foo: 'foo' });
-
-// Respond to message from parent thread
 ctx.onmessage = (event) => {
   console.log(event)
+
+  const {number, t1} = event.data;
+
+  if (number) {
+    let sum = 0;
+
+    for (let i = 0; i <= number; i++) {
+      sum += i;
+    }
+
+    ctx.postMessage({sum, t1})
+  }
 };
