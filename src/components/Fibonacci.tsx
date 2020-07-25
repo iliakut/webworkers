@@ -4,7 +4,7 @@ import Worker from "worker-loader!../calcFibonacciWorker";
 
 const Fibonacci: React.FC = () => {
   const worker = new Worker();
-  const [fibonacciRow, setFibonacciRow] = useState(['111', '22']);
+  const [fibonacciRow, setFibonacciRow] = useState([]);
   
   useEffect(() => {
     return () => {
@@ -13,11 +13,15 @@ const Fibonacci: React.FC = () => {
   }, []);
   
   const calcFib = () => {
-    worker.postMessage({start: true, n: 10})
+    worker.postMessage({start: true, n: 50})
   }
 
   worker.onmessage = (event) => {
-    console.log(event.data)
+    const newNumber: number = event.data;
+    setFibonacciRow((prevValue: any): any => {
+      const newValue = [newNumber].concat(prevValue)
+      return newValue;
+    })
   }
   
   const fibonacciCalcs = fibonacciRow.map((number) => {
