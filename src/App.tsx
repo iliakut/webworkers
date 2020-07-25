@@ -5,6 +5,7 @@ import worker from './worker';
 import WorkerSetup from "./workerCreate";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import Worker from 'worker-loader!./worker2';
+import Fibonacci from "./components/Fibonacci";
 
 /*
 * worker1 - вариант воркера с конвертацией модуля в файл
@@ -120,6 +121,8 @@ function App() {
         <button onClick={() => second()}>second (zero timeout)</button>
         <pre>{messageWorker}</pre>
         <button onClick={() => third()}>third (web worker)</button>
+        <br/>
+        <Fibonacci/>
       </header>
     </div>
   );
