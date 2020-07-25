@@ -111,6 +111,14 @@ function App() {
     setmessageWorker(`WebWorker sum = \n ${sum} \n took \n ${t2 - t1} ms`)
   };
 
+  const throwWorkerError = () => {
+    /*
+    * внутри воркера можно обрабатывтаь ошибки и
+    * при возникновении ошибок, воркер будет обрабатывать onerror
+    */
+    worker2.postMessage({callError: true})
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -121,6 +129,7 @@ function App() {
         <button onClick={() => second()}>second (zero timeout)</button>
         <pre>{messageWorker}</pre>
         <button onClick={() => third()}>third (web worker)</button>
+        <button onClick={() => throwWorkerError()}>Throw worker error</button>
         <br/>
         <Fibonacci/>
       </header>

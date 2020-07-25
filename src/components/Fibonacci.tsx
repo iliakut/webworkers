@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import Worker from "worker-loader!../calcFibonacciWorker";
+const worker = new Worker();
 
 const Fibonacci: React.FC = () => {
-  const worker = new Worker();
   const [fibonacciRow, setFibonacciRow] = useState([]);
   
   useEffect(() => {
@@ -13,7 +13,7 @@ const Fibonacci: React.FC = () => {
   }, []);
   
   const calcFib = () => {
-    worker.postMessage({start: true, n: 50})
+    worker.postMessage({start: true, n: 100})
   }
 
   worker.onmessage = (event) => {

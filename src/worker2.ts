@@ -5,7 +5,7 @@ const ctx: Worker = self as any;
 ctx.onmessage = (event) => {
   console.log(event)
 
-  const {number, t1} = event.data;
+  const {number, t1, callError} = event.data;
 
   if (number) {
     let sum = 0;
@@ -16,4 +16,12 @@ ctx.onmessage = (event) => {
 
     ctx.postMessage({sum, t1})
   }
+
+  if (callError) {
+    throw 'Error';
+  }
 };
+
+ctx.onerror = () => {
+  console.log('Ups, worker2 error')
+}

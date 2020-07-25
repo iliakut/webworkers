@@ -4,18 +4,24 @@ const ctx: Worker = self as any;
 
 ctx.onmessage = (event) => {
   if (event.data.start) {
-    fibonacci(event.data.n)
+    calcFibonacci(event.data.n)
   }
 };
 
-function fibonacci(n: number): number {
+const calcFibonacci = (n: number): number => {
   let a = 1;
   let b = 1;
   for (let i = 3; i <= n; i++) {
     let c = a + b;
     a = b;
     b = c;
-    ctx.postMessage(b);
+    sendMessage(b, i * 100);
   }
   return b;
+}
+
+const sendMessage = (number: number, time?: number): void => {
+  setTimeout(() => {
+    ctx.postMessage(number);
+  }, time)
 }
