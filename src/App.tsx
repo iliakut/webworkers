@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import worker from './worker';
@@ -33,6 +33,14 @@ function App() {
   const [messageZeroTimeout, setMessageZeroTimeout] = useState('not calculated yet')
   const [messageWorker, setmessageWorker] = useState('not calculated yet')
   const number = 1e9;
+
+  useEffect(() => {
+    return () => {
+      // размонтировать воркеры
+      worker1.terminate();
+      worker2.terminate();
+    }
+  }, []);
 
   const first = () => {
     /*
